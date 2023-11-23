@@ -26,7 +26,7 @@ class Game():
         self.player_right = False # inicializa do a variavel de movimento FALSE
         self.player_left = False # inicializa do a variavel de movimento FALSE
 
-        #Tiro
+        #Tiro 
         self.shoot_group = pygame.sprite.Group() # cria o grupo dos tiros
 
         # Enemy
