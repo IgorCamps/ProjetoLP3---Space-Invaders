@@ -1,3 +1,5 @@
+# Modificado por Igor dia
+
 import pygame, random,  pygame.mixer, time
 from pygame.locals import *
 from scripts.player import Player, Shot
@@ -26,10 +28,14 @@ class Game():
         self.player_right = False # inicializa do a variavel de movimento FALSE
         self.player_left = False # inicializa do a variavel de movimento FALSE
 
-        #Tiro 
+        #Disparo lazer 1
         self.shoot_group = pygame.sprite.Group() # cria o grupo dos tiros
+        
 
-        # Enemy
+        #Implementar disparo lazer bônus
+
+
+        # Meteoro
         self.create_enemy = True
         self.enemy_group = pygame.sprite.Group()
 
@@ -44,9 +50,10 @@ class Game():
 
         # MUSICA AMBIENTE
         pygame.mixer.init()
-        pygame.mixer.set_reserved(0)
         self.game_music = pygame.mixer.Sound("sounds/game_music.wav")
+        self.game_music.set_volume(0.1)
         pygame.mixer.Channel(0).play(self.game_music,-1)
+
 
         # FPS
         self.fps = pygame.time.Clock() # joga o clock dentro de uma variavel para controle de fps
