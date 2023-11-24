@@ -1,4 +1,16 @@
-# Modificado por Igor dia
+# Modificado por Igor dia 23/11
+# 
+# Lista de modificações a se fazer
+
+# Criar menu
+# Criar o disparo bônus
+# Definir plano de fundo
+# Criar novo cenários
+# Adicionar bônus de vida e dano
+# Mudar velocidade da nave
+# Mudar cenários em cada fase
+# Chefão final
+# Tela de encerramento
 
 import pygame, random,  pygame.mixer, time
 from pygame.locals import *
