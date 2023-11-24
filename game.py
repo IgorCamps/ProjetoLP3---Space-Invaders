@@ -50,7 +50,7 @@ class Game():
 
         # MUSICA AMBIENTE
         pygame.mixer.init()
-        self.game_music = pygame.mixer.Sound("sounds/game_music.wav")
+        self.game_music = pygame.mixer.Sound("sons/game_music.wav")
         self.game_music.set_volume(0.1)
         pygame.mixer.Channel(0).play(self.game_music,-1)
 
@@ -76,7 +76,7 @@ class Game():
                         self.player_shot.rect[0] = self.player.rect[0]+23 # passa a posicao inicial em x
                         self.player_shot.rect[1] = self.player.rect[1] # passa a posicao inicial em y
                         self.shoot_group.add(self.player_shot) # adiciona o tiro no grupo dos tiros
-                        pygame.mixer.Channel(1).play(pygame.mixer.Sound("sounds/shot.wav")) # musica dos tiros
+                        pygame.mixer.Channel(1).play(pygame.mixer.Sound("sons/shot.wav")) # musica dos tiros
 
 
                 if event.type == KEYUP: # quando soltar a tecla
@@ -107,7 +107,6 @@ class Game():
 
             if self.enemy.rect[1] > 600: # quando os inimigos chegarem a 700px da tela, eles são destruidos
                 self.enemy_group.remove(self.enemy)
-                print("saiu da tela")
 
             # VERIFICAÇÃO DE SCORE E LEVEL
             if self.player_points > 500:
@@ -150,7 +149,7 @@ class Game():
             if (pygame.sprite.groupcollide(self.shoot_group, self.enemy_group, True, True)):
                 self.player_points += random.randint(1,10)
                 self.points_text = self.font.render("SCORE: " + str(self.player_points), 1, (255,255,255))
-                pygame.mixer.Channel(2).play(pygame.mixer.Sound("sounds/enemy_death.wav")) # musica da morte do inimigo
+                pygame.mixer.Channel(2).play(pygame.mixer.Sound("sons/enemy_death.wav")) # musica da morte do inimigo
 
 
             if (pygame.sprite.groupcollide(self.player_group, self.enemy_group, True, False)):
