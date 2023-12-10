@@ -21,7 +21,7 @@ from scripts.enemy import Enemy
 class Game():
     def __init__(self):
 
-        pygame.init() #inicializa o pygame
+        pygame.init() #inicializa o pygame 
 
         self.game_start = True # variavel que comanda se o jogo comeca ou nao
 
@@ -63,7 +63,7 @@ class Game():
         # MUSICA AMBIENTE
         pygame.mixer.init()
         self.game_music = pygame.mixer.Sound("sons/game_music.wav")
-        self.game_music.set_volume(0.1)
+        self.game_music.set_volume(0.1) # define o volume da musica
         pygame.mixer.Channel(0).play(self.game_music,-1)
 
 
@@ -88,7 +88,10 @@ class Game():
                         self.player_shot.rect[0] = self.player.rect[0]+23 # passa a posicao inicial em x
                         self.player_shot.rect[1] = self.player.rect[1] # passa a posicao inicial em y
                         self.shoot_group.add(self.player_shot) # adiciona o tiro no grupo dos tiros
-                        pygame.mixer.Channel(1).play(pygame.mixer.Sound("sons/shot.wav")) # musica dos tiros
+                        self.game_shot = pygame.mixer.Sound("sons/shot.wav") # musica dos tiros
+                        self.game_shot.set_volume(0.3) # define o volume do disparo
+                        pygame.mixer.Channel(1).play(self.game_shot) 
+                        
 
 
                 if event.type == KEYUP: # quando soltar a tecla
