@@ -21,11 +21,6 @@ class Game():
         self.player_right = False
         self.player_left = False
 
-
-        # self.game_shot = pygame.sprite.Group()
-
-
-
         self.shoot_group = pygame.sprite.Group()
         self.create_enemy = True
         self.enemy_group = pygame.sprite.Group()
@@ -36,6 +31,9 @@ class Game():
         self.level = 0
         self.enemy_in_window = 5
         self.level_text = self.font.render("LEVEL: " + str(self.level), 1, (255, 255, 255))
+        self.meteors_missed = 0
+        self.max_meteors_missed = 3
+        self.player_lives = 3
 
         pygame.mixer.init()
         self.game_music = pygame.mixer.Sound("sons/game_music.wav")
@@ -65,55 +63,76 @@ class Game():
                     self.player_right = False
                 elif event.key == K_LEFT or event.key == K_a:
                     self.player_left = False
+
     def update(self):
+        # Atualiza a posição do jogador
         if self.player_right:
             self.player.rect[0] += self.player.speed
         if self.player_left:
             self.player.rect[0] -= self.player.speed
 
+        # Atualiza os grupos
         self.shoot_group.update()
         self.player_group.update()
         self.enemy_group.update()
 
+        # Adiciona meteoros se necessário
         if len(self.enemy_group) < 5:
-            for i in range(5):
+            for i in range(5 - len(self.enemy_group)):
                 self.enemy = Enemy()
                 self.enemy_group.add(self.enemy)
 
-        if self.enemy.rect[1] > 600:
-            self.enemy_group.remove(self.enemy)
+        # Remove meteoros que passaram da tela
+        for enemy in self.enemy_group.sprites():
+            if enemy.rect[1] > self.window_height:
+                self.enemy_group.remove(enemy)
+                self.meteors_missed += 1
 
+                if self.meteors_missed >= self.max_meteors_missed:
+                    self.game_over()
+
+        # Atualiza a velocidade dos meteoros com base nos pontos
         if self.player_points <= 100:
             self.enemy.speed = 2
             self.level = 1
             self.level_text = self.font.render("LEVEL: " + str(self.level), 1, (255, 255, 255))
-        
         elif self.player_points > 100:
             self.enemy.speed = 3
             self.level = 2
             self.level_text = self.font.render("LEVEL: " + str(self.level), 1, (255, 255, 255))
-        
-        # elif self.enemy
 
+        # Remove tiros que saíram da tela
         for bullet in self.shoot_group:
-            if self.player_shot.rect[1] < -20:
-                self.shoot_group.remove(self.player_shot)
+            if bullet.rect[1] < -20:
+                self.shoot_group.remove(bullet)
 
+        # Colisão entre tiros e meteoros
         if pygame.sprite.groupcollide(self.shoot_group, self.enemy_group, True, True):
             self.player_points += random.randint(1, 10)
             self.points_text = self.font.render("SCORE: " + str(self.player_points), 1, (255, 255, 255))
             pygame.mixer.Channel(2).play(pygame.mixer.Sound("sons/enemy_death.wav"))
 
-        if pygame.sprite.groupcollide(self.player_group, self.enemy_group, True, False):
-            self.restart_game()
+        # Colisão entre jogador e meteoros
+        for enemy in self.enemy_group.sprites():
+            if pygame.sprite.collide_rect(self.player, enemy):
+                # O jogador foi atingido por um meteoro
+                self.player_lives -= 1
+                if self.player_lives <= 0:
+                    self.game_over()
 
     def render(self):
         self.window.blit(self.background, (0, 0))
         self.window.blit(self.points_text, (850, 10))
         self.window.blit(self.level_text, (650, 10))
+        lives_text = self.font.render("LIVES: " + str(self.player_lives), 1, (255, 255, 255))
+        self.window.blit(lives_text, (10, 10))
         self.player_group.draw(self.window)
         self.shoot_group.draw(self.window)
         self.enemy_group.draw(self.window)
+
+    def game_over(self):
+        self.is_running = False
+        # Adicione aqui a lógica para exibir "Game Over" e encerrar o jogo.
 
     def restart_game(self):
         self.__init__()
@@ -126,4 +145,7 @@ class Game():
             
             pygame.display.flip()
             self.clock.tick(30)
-Game()
+
+# Inicializa o jogo
+game_instance = Game()
+game_instance.start_game()
