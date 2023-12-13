@@ -26,7 +26,7 @@ class Player (pygame.sprite.Sprite):
         self.image = self.images[self.current_image]
         self.image = pygame.transform.scale(self.image, (68, 78))
 
-class Player2(Player):
+# class Player2(Player):
     
 
 
@@ -37,6 +37,6 @@ class Shot (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.speed = 30
 
-
     def update(self):
         self.rect[1] -= self.speed
+        

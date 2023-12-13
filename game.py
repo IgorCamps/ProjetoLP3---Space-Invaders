@@ -21,6 +21,11 @@ class Game():
         self.player_right = False
         self.player_left = False
 
+
+        # self.game_shot = pygame.sprite.Group()
+
+
+
         self.shoot_group = pygame.sprite.Group()
         self.create_enemy = True
         self.enemy_group = pygame.sprite.Group()
@@ -78,11 +83,17 @@ class Game():
         if self.enemy.rect[1] > 600:
             self.enemy_group.remove(self.enemy)
 
-        if self.player_points > 500:
+        if self.player_points <= 100:
             self.enemy.speed = 2
             self.level = 1
             self.level_text = self.font.render("LEVEL: " + str(self.level), 1, (255, 255, 255))
-        # Adicione aqui as outras verificações de nível
+        
+        elif self.player_points > 100:
+            self.enemy.speed = 3
+            self.level = 2
+            self.level_text = self.font.render("LEVEL: " + str(self.level), 1, (255, 255, 255))
+        
+        # elif self.enemy
 
         for bullet in self.shoot_group:
             if self.player_shot.rect[1] < -20:
@@ -115,6 +126,4 @@ class Game():
             
             pygame.display.flip()
             self.clock.tick(30)
-
-# Remova esta linha para garantir que o jogo não inicie automaticamente
 Game()
