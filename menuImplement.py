@@ -48,6 +48,9 @@ def main_menu():
                     game_instance.start_game()
                 elif event.key == pygame.K_2:
                     print("Abrir configurações!")
+                    # altura, largura = 1920, 1080
+                    # screen = pygame.display.set_mode((altura, largura))
+                    # screen.fill(BLACK)
                 elif event.key == pygame.K_3:
                     print("Ver créditos!")
                 elif event.key == pygame.K_4:

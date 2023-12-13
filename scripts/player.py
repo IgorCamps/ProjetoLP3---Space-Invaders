@@ -26,6 +26,9 @@ class Player (pygame.sprite.Sprite):
         self.image = self.images[self.current_image]
         self.image = pygame.transform.scale(self.image, (68, 78))
 
+class Player2(Player):
+    
+
 
 class Shot (pygame.sprite.Sprite):
     def __init__(self):
