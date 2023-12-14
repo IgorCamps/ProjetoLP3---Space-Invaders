@@ -18,24 +18,14 @@ class Player(pygame.sprite.Sprite):
         self.rect[0] = 600
         self.rect[1] = 510
         self.points = 0
-        self.blink_frames = 0  # Adicionado para controle do efeito de piscar
 
     def update(self):
         self.animation()
-
-        # Atualiza o efeito de piscar
-        if self.blink_frames > 0:
-            self.image.set_alpha(0 if self.image.get_alpha() == 255 else 255)
-            self.blink_frames -= 1
 
     def animation(self):
         self.current_image = (self.current_image + 1) % 2
         self.image = self.images[self.current_image]
         self.image = pygame.transform.scale(self.image, (68, 78))
-
-    def blink(self, frames=5):
-        # Ativa o efeito de piscar
-        self.blink_frames = frames
 
 class Shot(pygame.sprite.Sprite):
     def __init__(self):

@@ -12,14 +12,20 @@ BLACK = (0, 0, 0)
 WIDTH, HEIGHT = 1200, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Invaders")
+background = pygame.image.load("img/background/fundo.png")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
 # Fonte para o menu
 font = pygame.font.Font(None, 36)
 
+# Carrega o background
+background = pygame.image.load("img/background/fundo.png")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
 # Musica menu
 pygame.mixer.init()
 game_music = pygame.mixer.Sound("sons/game_music.wav")
-game_music.set_volume(0.1)
+game_music.set_volume(0.01)
 pygame.mixer.Channel(0).play(game_music, -1)
 
 # Função para desenhar o texto
@@ -63,7 +69,7 @@ def main_menu():
 
 
         # Limpa a tela
-        screen.fill(BLACK)
+        screen.blit(background, (0, 0))
 
         # Desenha o menu
         draw_text("Jogar", font, WHITE, WIDTH // 2, HEIGHT // 2 - 50)
@@ -75,6 +81,7 @@ def main_menu():
         pygame.display.flip()
 
 def show_credits():
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -85,7 +92,7 @@ def show_credits():
                     return  # Volta para o menu principal
 
         # Limpa a tela
-        screen.fill(BLACK)
+        screen.blit(background, (0, 0))
 
         # Desenha as informações de créditos
         draw_text("Olá jovem padawan, queremos agradecer por jogar!", font, WHITE, WIDTH // 2, HEIGHT // 2 - 150)
@@ -117,7 +124,7 @@ def show_settings(volume):
                     print("Volume:", volume)
 
         # Limpa a tela
-        screen.fill(BLACK)
+        screen.blit(background, (0, 0))
 
         # Desenha as configurações
         draw_text("Configurações", font, WHITE, WIDTH // 2, HEIGHT // 2 - 150)
